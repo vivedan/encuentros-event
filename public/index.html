@@ -1,8 +1,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>In-Site</title>
-    <meta name="description" content="In-Site" />
+    <title>Encuentros - Event</title>
+    <meta name="description" content="Encuentros-Event" />
 
     <link
       rel="shortcut icon"
@@ -25,6 +25,10 @@
 
     <script src="https://cdn.rawgit.com/zcanter/aframe-gradient-sky/master/dist/gradientsky.min.js"></script>
     <script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
+    
+    <script src="https://unpkg.com/aframe-pointcloud-component/dist/aframe-pointcloud-component.min.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="style.css" />
 
@@ -130,47 +134,114 @@
             console.log(event.detail);
             let port = event.detail;
             let overlay = document.querySelector('#exitOverlay');
+            let test = document.getElementById('test1');
             
             switch (port) {
-                case "wood":
-                  overlay.style.visibility = "visible";
-                  overlay.style.opacity= '1';
-                  window.setTimeout(function(){window.open("https://noir-mdwi7.ondigitalocean.app/woods.html", "_self")}, 2000);
-                  
-                  break;
-                case "fire":
-                  overlay.style.visibility = "visible";
-                  overlay.style.opacity= '1';
-                  window.setTimeout(function(){window.open("https://noirfire-oiqbg.ondigitalocean.app/fire.html", "_self")}, 2000);
+                case "alDespacho":
+                  //test.style.background = "green";
+                  document.getElementById('subtrackAlDespacho').style.display = "block";
               
                   break;
+                
+                case "alFoto":
+                  //test.style.background = "green";
+                  document.getElementById('subtrackAlFoto').style.display = "block";
+              
+                  break;
+                
+                case "alBuhardilla":
+                  //test.style.background = "green";
+                  document.getElementById('subtrackAlBuhardilla').style.display = "block";
+              
+                  break;
+                
+                case "maSotano":
+                  //overlay.style.visibility = "visible";
+                  //overlay.style.opacity= '1';
+                  //window.setTimeout(function(){window.open("https://noir-mdwi7.ondigitalocean.app/woods.html", "_self")}, 2000);
+                  //test.style.background = "yellow";
+                  document.getElementById('subtrackMaSotano').style.display = "block";
+                
+                  break;
+                
+                case "maSalon":
+                  //overlay.style.visibility = "visible";
+                  //overlay.style.opacity= '1';
+                  //window.setTimeout(function(){window.open("https://noir-mdwi7.ondigitalocean.app/woods.html", "_self")}, 2000);
+                  //test.style.background = "yellow";
+                  document.getElementById('subtrackMaSalon').style.display = "block";
+                
+                  break;
+                
+                case "maDespacho":
+                  //overlay.style.visibility = "visible";
+                  //overlay.style.opacity= '1';
+                  //window.setTimeout(function(){window.open("https://noir-mdwi7.ondigitalocean.app/woods.html", "_self")}, 2000);
+                  //test.style.background = "yellow";
+                  document.getElementById('subtrackMaDespacho').style.display = "block";
+                
+                  break;
+                
+                case "paSotano":
+                  //test.style.background = "blue"; 
+                  document.getElementById('subtrackPaSotano').style.display = "block";
+                
+                  break;
+                
+                case "paDespacho":
+                  //test.style.background = "blue"; 
+                  document.getElementById('subtrackPaDespacho').style.display = "block";
+                
+                  break;
+                
+                case "paJardin":
+                  //test.style.background = "blue"; 
+                  document.getElementById('subtrackPaJardin').style.display = "block";
+                
+                  break;
+                
+                case "cocina":
+                  //test.style.background = "blue"; 
+                  document.getElementById('subtrackCocina').style.display = "block";
+                
+                  break;
+                
               }
+          });
 
-            /*this.el.addEventListener("hitend", e => {
-              console.log("fin colision");
-              switch (port) {
-                case "col1":
-                  window.open("/underwater.html", "_self");
-                  break;
-                case "col2":
-                  window.open("/woods.html", "_self");
-                  break;
-              }*/
-            });
-          
-        }
+          this.el.addEventListener("hitend", e => {
+            let test = document.getElementById('test1');
+            console.log("fin colision");
+            //test.style.background = "transparent";
+            let subs = document.getElementsByClassName('subs');
+            
+            for(let i= 0; i< subs.length; i++){
+              subs[i].style.display = "none";
+            };
+            
+          });
+        
+        },
       });
     </script>
+    
+    <!--RADIO COMPONENT -->
     <script>
       AFRAME.registerComponent("radio-streaming", {
-        schema: {},
+        schema: {
+          src: {type: 'selector'},
+          volume: {type: 'number', default: 1},
+          refDist: {type: 'number', default: 5},
+          rollOff: {type: 'number', default: 10},
+        },
 
         init: function() {
           let button = document.getElementById("enterButton");
-          let visitRosie = document.querySelector('#roomRosie');
-          let visitPatri = document.querySelector('#roomPatri');
-          visitRosie.addEventListener("click", radioStream);
-          visitPatri.addEventListener("click", radioStream);
+          //let visitRosie = document.querySelector('#roomRosie');
+          //let visitPatri = document.querySelector('#roomPatri');
+          //visitRosie.addEventListener("click", radioStream);
+          //visitPatri.addEventListener("click", radioStream);
+          button.addEventListener("click", radioStream);
 
           var el = this.el;
           var i;
@@ -179,6 +250,7 @@
           var sound;
           var radioEmitter = this.el.getObject3D("mesh");
           //console.log(radioEmitter);
+          var data = this.data;
 
           function radioStream() {
             //TAKEN FROM AFRAME SOUND COMPONENT
@@ -199,16 +271,17 @@
 
             //MINE
 
-            var audioElement = document.getElementById("music");
+            //var audioElement = document.getElementById("vid0");
+            var audioElement = data.src;
 
             /*var stream = new MediaStream("https://cdn.glitch.com/7a6793a5-b8c7-43cd-a82b-b98449c54afd%2FGROUP5.mp3?v=1601211078144");*/
 
             var positionalAudio = new THREE.PositionalAudio(listener);
             positionalAudio.setMediaElementSource(audioElement);
             /*positionalAudio.setMediaStreamSource(stream);*/
-            positionalAudio.setVolume(1);
-            positionalAudio.setRefDistance(5);
-            positionalAudio.setRolloffFactor(10);
+            positionalAudio.setVolume(data.volume);
+            positionalAudio.setRefDistance(data.refDist);
+            positionalAudio.setRolloffFactor(data.rollOff);
             //positionalAudio.setDirectionalCone(180, 230, 0.1);
 
             /*var helper = new PositionalAudioHelper(positionalAudio, 0.1);
@@ -220,65 +293,8 @@
       });
     </script>
     
-    <script>
-      AFRAME.registerComponent("radio-streaming-two", {
-        schema: {},
-
-        init: function() {
-          let button = document.getElementById("enterButton");
-          let visitRosie = document.querySelector('#roomRosie');
-          let visitPatri = document.querySelector('#roomPatri');
-          visitRosie.addEventListener("click", radioStream);
-          visitPatri.addEventListener("click", radioStream);
-
-          var el = this.el;
-          var i;
-          var sceneEl = this.el.sceneEl;
-          var self = this;
-          var sound;
-          var radioEmitter = this.el.getObject3D("mesh");
-          //console.log(radioEmitter);
-
-          function radioStream() {
-            //TAKEN FROM AFRAME SOUND COMPONENT
-
-            // Only want one AudioListener. Cache it on the scene.
-            var listener = (this.listener =
-              sceneEl.audioListener || new THREE.AudioListener());
-            sceneEl.audioListener = listener;
-
-            if (sceneEl.camera) {
-              sceneEl.camera.add(listener);
-            }
-
-            // Wait for camera if necessary.
-            sceneEl.addEventListener("camera-set-active", function(evt) {
-              evt.detail.cameraEl.getObject3D("camera").add(listener);
-            });
-
-            //MINE
-
-            var audioElement = document.getElementById("music2");
-
-            /*var stream = new MediaStream("https://cdn.glitch.com/7a6793a5-b8c7-43cd-a82b-b98449c54afd%2FGROUP5.mp3?v=1601211078144");*/
-
-            var positionalAudio = new THREE.PositionalAudio(listener);
-            positionalAudio.setMediaElementSource(audioElement);
-            /*positionalAudio.setMediaStreamSource(stream);*/
-            positionalAudio.setVolume(1);
-            positionalAudio.setRefDistance(20);
-            positionalAudio.setRolloffFactor(10);
-            //positionalAudio.setDirectionalCone(180, 230, 0.1);
-
-            /*var helper = new PositionalAudioHelper(positionalAudio, 0.1);
-      positionalAudio.add(helper);*/
-
-            radioEmitter.add(positionalAudio);
-          }
-        }
-      });
-    </script>
     
+    <!--ROOM CHANGE COMPONENT -->
     <script>
       
       AFRAME.registerComponent('room-change', {
@@ -291,24 +307,14 @@
           let el = this.el;
           let avatar = document.querySelector('#avatar');
           
-          scene.addEventListener('roomChange', function(event){
+          scene.addEventListener('roomChange', function(){
             
-            let name = event.detail.name;
-            if(name=="roomPatri"){
-              console.log("changing to Patricia room");
-              el.setAttribute('position', {x:50, y:1.3, z: 1000});
+              console.log("going to Artist");
+              el.setAttribute('position', {x:-32.6, y:17.5, z:37.7});
               //el.object3D.rotation.y = THREE.Math.degToRad(90);
-              el.setAttribute('movement-controls', 'speed', 0.2);
-              el.emit('resetorientation', {grad: 90});
-              
-            }else if(name=="roomRosie"){
-              console.log("changing to Rosie room");
-              el.setAttribute('position', {x:-94, y:-16, z: -1155});
-              //el.object3D.rotation.y = THREE.Math.degToRad(0);
-              el.setAttribute('movement-controls', 'speed', 0.6);
-              el.emit('resetorientation', {grad: -150});
-              
-            }else{console.log("what are you talking about?")};
+              //el.setAttribute('movement-controls', 'speed', 0.2);
+              el.emit('resetorientation', {grad: -35.2});
+            
             
             
           });
@@ -336,6 +342,8 @@
     
     </script>
     
+    
+    <!--RESET ORIENTATION COMPONENT -->
     <script>
     
     AFRAME.registerComponent('resetorientation', {
@@ -352,10 +360,37 @@
     </script>
     
     
+    <!--MODEL OPACITY -->
+    <script>
+    
+      AFRAME.registerComponent('model-opacity', {
+        schema: {default: 1.0},
+        init: function () {
+          this.el.addEventListener('model-loaded', this.update.bind(this));
+        },
+        update: function () {
+          var mesh = this.el.getObject3D('mesh');
+          var data = this.data;
+          if (!mesh) { return; }
+          mesh.traverse(function (node) {
+                        
+            if (node.isMesh) {
+              node.material.opacity = data;
+              node.material.transparent = data < 1.0;
+              node.material.needsUpdate = true;
+              
+            }
+          });
+        }
+      });
+    
+    </script>
+    
+    
     
   </head>
   <body>
-    <audio
+    <!--<audio
       loop
       id="music"
       preload="auto"
@@ -371,8 +406,158 @@
       src="https://cors-anywhere.herokuapp.com/http://209.97.181.143/stream"
       crossorigin="anonymous"
     ></audio>
+    <div id="test1" style="position:absolute; height: 100px; width: 100px; z-index: 30000; background: red"></div>-->
+    
+    
+    <div id="videocontainer" style="position: absolute; z-index: 500000; display: none">
+      <video id="vidAlDespacho" class="video" preload="auto" crossorigin="anonymous">
+        <source
+          src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FcutDespAlv_1.mp4?v=1612892918226"
+          type="video/mp4"
+        />
+        <track id="trackAlDespacho" class="tracks" label="Español" kind="subtitles" srclang="es" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FdespachoAlvaroESP.vtt?v=1612892903316" default>
+
+        Your browser does not support the video tag.
+      </video>
+
+      <video id="vidAlFoto" class="video" preload="auto" crossorigin="anonymous">
+        <source
+          src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FcutFotoAlv.mp4?v=1613122927899"
+          type="video/mp4"
+        />
+        <track id="trackAlFoto" class="tracks" label="Español" kind="subtitles" srclang="es" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FfotoAlvaroESP.vtt?v=1613122971481" default>
+
+        Your browser does not support the video tag.
+      </video>
+
+      <video id="vidAlCocina" class="videoCocina" preload="auto" crossorigin="anonymous">
+        <source
+          src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FcocinaAlvaro.mp4?v=1613129368642"
+          type="video/mp4"
+        />
+        <track id="trackCocina" class="tracks" label="Español" kind="subtitles" srclang="es" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FcocinaJunto2ESP.vtt?v=1613134070965" default>
+        Your browser does not support the video tag.
+      </video>
+
+      <video id="vidAlBuhardilla" class="video" preload="auto" crossorigin="anonymous">
+            <source
+              src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FcutBuhardillaAlv.mp4?v=1613122929435"
+              type="video/mp4"
+            />
+            <track id="trackAlBuhardilla" class="tracks" label="Español" kind="subtitles" srclang="es" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FbuhardillaESP.vtt?v=1613122970592" default>
+
+            Your browser does not support the video tag.
+      </video>
+      
+      
+      <video id="vidMaDespacho" class="video" preload="auto" crossorigin="anonymous">
+        <source
+          src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FcutDespMama.mp4?v=1613122923762"
+          type="video/mp4"
+        />
+        <track id="trackMaDespacho" class="tracks" label="Español" kind="subtitles" srclang="es" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FdespachoMamaESP.vtt?v=1613122971032" default>
+
+        Your browser does not support the video tag.
+      </video>
+      
+      <video id="vidMaSalon" class="video" preload="auto" crossorigin="anonymous">
+        <source
+          src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FsalonMama.mp4?v=1613122929685"
+          type="video/mp4"
+        />
+        <track id="trackMaSalon" class="tracks" label="Español" kind="subtitles" srclang="es" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FsalonMamaESP.vtt?v=1613122971970" default>
+
+        Your browser does not support the video tag.
+      </video>
+      
+      <video id="vidMaSotano" class="video" preload="auto" crossorigin="anonymous">
+        <source
+          src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FsotanoMama.mp4?v=1613122929858"
+          type="video/mp4"
+        />
+        <track id="trackMaSotano" class="tracks" label="Español" kind="subtitles" srclang="es" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FsotanoMamaESP.vtt?v=1613122972163" default>
+
+        Your browser does not support the video tag.
+      </video>
+      
+      <video id="vidMaCocina" class="videoCocina" preload="auto" crossorigin="anonymous">
+        <source
+          src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FcocinaMama.mp4?v=1613129366163"
+          type="video/mp4"
+        />
+
+        Your browser does not support the video tag.
+      </video>
+      
+      
+      <video id="vidPaDespacho" class="video" preload="auto" crossorigin="anonymous">
+        <source
+          src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FcutDespPapa.mp4?v=1613122923762"
+          type="video/mp4"
+        />
+        <track id="trackPaDespacho" class="tracks" label="Español" kind="subtitles" srclang="es" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FdespachoPapaESP.vtt?v=1613122971278" default>
+
+        Your browser does not support the video tag.
+      </video>
+      
+      <video id="vidPaSotano" class="video" preload="auto" crossorigin="anonymous">
+        <source
+          src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FsotanoPapa.mp4?v=1613122930155"
+          type="video/mp4"
+        />
+        <track id="trackPaSotano" class="tracks" label="Español" kind="subtitles" srclang="es" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FsotanoPapaESP.vtt?v=1613122970592" default>
+
+        Your browser does not support the video tag.
+      </video>
+      
+      <video id="vidPaCocina" class="videoCocina" preload="auto" crossorigin="anonymous">
+        <source
+          src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FcocinaPapa.mp4?v=1613129368848"
+          type="video/mp4"
+        />
+
+        Your browser does not support the video tag.
+      </video>
+      
+      <video id="vidPaJardin" class="video" preload="auto" crossorigin="anonymous">
+        <source
+          src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FporchePapa.mp4?v=1613122934822"
+          type="video/mp4"
+        />
+        <track id="trackPaJardin" class="tracks" label="Español" kind="subtitles" srclang="es" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FporchePapaESP.vtt?v=1613122971710" default>
+
+        Your browser does not support the video tag.
+      </video>
+      
+      <!--<video id="vidCocina" class="video" preload="auto" loop crossorigin="anonymous">
+        <source
+          src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FcocinaJuntoSilencioRedux.mp4?v=1613128812706"
+          type="video/mp4"
+        />
+        
+        Your browser does not support the video tag.
+      </video>-->
+      
+    </div>
+    
+    <div id="subtitles">
+      <div class="subs" id="subtrackAlDespacho"></div>
+      <div class="subs" id="subtrackAlFoto"></div>
+      <div class="subs" id="subtrackAlBuhardilla"></div>
+      <div class="subs" id="subtrackMaDespacho"></div>
+      <div class="subs" id="subtrackMaSalon"></div>
+      <div class="subs" id="subtrackMaSotano"></div>
+      <div class="subs" id="subtrackPaDespacho"></div>
+      <div class="subs" id="subtrackPaSotano"></div>
+      <div class="subs" id="subtrackPaJardin"></div>
+      <div class="subs" id="subtrackCocina"></div>
+    </div>
+    
+    <div id="enterOverlay"></div>
+    
     <div id="mainCont">
       
+            
       <div id="scene">
         <a-scene
           vr-mode-ui="enterVRButton: #VRButton"
@@ -387,84 +572,79 @@
           
         >
           <a-assets>
+                  
+            <!-- MODEL CASA -->
+            <a-asset-item id="model1" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FDespachoalvaro_Model_1redto300nB.ply?v=1612867221133"></a-asset-item>
+            <a-asset-item id="model2" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Fsalon_Model_1M_rednB.ply?v=1612867235737"></a-asset-item>
+            <a-asset-item id="model3" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FDespachoMama2_Model_1Mredto300nB.ply?v=1612867225545"></a-asset-item>
+            <a-asset-item id="model4" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Fgaraje_Model_1Mtextredto300nB.ply?v=1612867215065"></a-asset-item>
+            <a-asset-item id="model5" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Fdespachopapa_Model_1Mredto300nB.ply?v=1612867220920"></a-asset-item>
+            <a-asset-item id="model6" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Fbuhardilla_Model_1M_redto300nB.ply?v=1612867162034"></a-asset-item>
+            <a-asset-item id="model7" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FCocina_Model_2_1Mredto300nB.ply?v=1612867218562"></a-asset-item>
+            <a-asset-item id="model8" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Ffotograf_aestudio_Model_1Mredto300nB.ply?v=1612867184626"></a-asset-item>
+            <a-asset-item id="model9" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Fporche_Model_1Mredto300nB.ply?v=1612867226183"></a-asset-item>
             
-            <!--ENTRANCE-->
+            <!-- MODEL PERSONAS-->
             
-            
-            <!--PATRI-->
-            <a-asset-item id="Patri" src="https://cdn.glitch.com/6654838e-daa6-4e95-9620-946466c36beb%2FintimacyTryout3.glb?v=1607520453389"></a-asset-item>
-            <a-asset-item id="PatriAnim" src="https://cdn.glitch.com/6654838e-daa6-4e95-9620-946466c36beb%2FintimacyTryoutANIMCACHE8.glb?v=1608400309856"></a-asset-item>
-            <a-asset-item id="Floor" src="https://cdn.glitch.com/6654838e-daa6-4e95-9620-946466c36beb%2FintimacyFloor1.glb?v=1608386745977"></a-asset-item>
-            <a-asset-item id="Chair" src="https://cdn.glitch.com/6654838e-daa6-4e95-9620-946466c36beb%2FintimacyChair2.glb?v=1608390396914"></a-asset-item>
-            <a-asset-item id="Radio" src="https://cdn.glitch.com/6654838e-daa6-4e95-9620-946466c36beb%2FintimacyRadio1.glb?v=1608390393648"></a-asset-item>
-
-            <img id="sky" src="https://cdn.glitch.com/6654838e-daa6-4e95-9620-946466c36beb%2Fbackground.png?v=1608375857695">
-            
-            
-            <!--ROSIE-->
-            <a-asset-item
-              id="test"
-              src="https://cdn.glitch.com/f6b3d4a3-6904-47e6-a2ee-a94e639455bf%2FWMStest3.gltf?v=1608235117684"
-            ></a-asset-item>
-
-            <a-asset-item
-              id="traytwo"
-              src="https://cdn.glitch.com/f6b3d4a3-6904-47e6-a2ee-a94e639455bf%2Ftraytwo%20final-1glow.glb?v=1608236122301"
-            ></a-asset-item>
-
-            <a-asset-item
-              id="trayone"
-              src="https://cdn.glitch.com/f6b3d4a3-6904-47e6-a2ee-a94e639455bf%2FTrayone-1upload.glb?v=1608236874455"
-            ></a-asset-item>
-
-            <a-asset-item
-              id="traytwo-2"
-              src="https://cdn.glitch.com/f6b3d4a3-6904-47e6-a2ee-a94e639455bf%2FTraytwo-2upload%20white.glb?v=1608238081748"
-            ></a-asset-item>
+            <a-asset-item id="mAlCocina" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FalvaroCocinaredto100.ply?v=1613094047932"></a-asset-item>
+            <a-asset-item id="mAlDespacho" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FalvaroDespachoredto100.ply?v=1613094071462"></a-asset-item>
+            <a-asset-item id="mAlFoto" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FalvaroFotoredto100.ply?v=1613094072410"></a-asset-item>
+            <a-asset-item id="mAlBuhardilla" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FalvaroBuhardillaredto100.ply?v=1613094056898"></a-asset-item>
+            <a-asset-item id="mMaCocina" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FmamaCocinaredto100.ply?v=1613094068237"></a-asset-item>
+            <a-asset-item id="mMaDespacho" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FmamaDespachoredto100.ply?v=1613094048173"></a-asset-item>
+            <a-asset-item id="mMaSalon" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FmamaSalonredto100.ply?v=1613053046091"></a-asset-item>
+            <a-asset-item id="mMaSotano" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FmamaSotanoredto100.ply?v=1613094037856"></a-asset-item>
+            <a-asset-item id="mPaCocina" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FpapaCocinaredto100.ply?v=1613094055734"></a-asset-item>
+            <a-asset-item id="mPaDespacho" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FpapaDespachoredto100.ply?v=1613094075118"></a-asset-item>
+            <a-asset-item id="mPaSotano" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FpapaStairsredto100.ply?v=1613045051289"></a-asset-item>
+            <a-asset-item id="mPaJardin" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FpapaStandredto100.ply?v=1613094074696"></a-asset-item>
             
             
-            <!--MUSIC
+            <a-asset-item id="avatarPixel" src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Favatartest3mod.ply?v=1613219775054"></a-asset-item>
+            
+            <!--AMBIENCE-->
             
             <audio
-              id="audio1"
-              src="https://cdn.glitch.com/f44e7d0f-6299-4434-a136-b24515e92365%2Fre-532424__klankbeeld__forest-summer-roond-022-200619-0186.mp3?v=1604157785395"
+              id="despachoAlvaroAmbience"
+              src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Fdespachoalvaroambience.mp3?v=1612870444793"
             ></audio>
             <audio
-              id="audio2"
-              src="https://cdn.glitch.com/f44e7d0f-6299-4434-a136-b24515e92365%2FBinaural%20Nature%20Sound%20001.mp3?v=1604157792227"
+              id="sotanoAmbience"
+              src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Fsotanoambience.mp3?v=1612870447113"
             ></audio>
             
             <audio
-              id="fireaudio"
-              src="https://cdn.glitch.com/f44e7d0f-6299-4434-a136-b24515e92365%2Ffire%20portal.mp3?v=1604240453777"
+              id="fotografiaAmbience"
+              src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Ffotografiaambience.mp3?v=1612870446816"
             ></audio>
             
             <audio
-              id="woodaudio"
-              src="https://cdn.glitch.com/f44e7d0f-6299-4434-a136-b24515e92365%2Fwood%20portal.mp3?v=1604240454571"
-            ></audio>-->
-            
+              id="despachoMamaAmbience"
+              src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Fdespachomamaambience.mp3?v=1612872024081"
+            ></audio>
             <audio
-              id="audioRosie"
-              src="https://cdn.glitch.com/b82bb398-3ada-4af4-8aa4-d21adf3a10b0%2F11MB%20Sounding%20Matters%20-%20The%20System%20Erupts%20from%20wednesday.mp3?v=1610442790281"
+              id="buhardillaAmbience"
+              src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Fbuhardillaambience.mp3?v=1612872026262"
             ></audio>
             
             <audio
-              id="audioPatriRoad"
-              src="https://cdn.glitch.com/b82bb398-3ada-4af4-8aa4-d21adf3a10b0%2Finsite_Calle.mp3?v=1610533619165"
+              id="salonAmbience"
+              src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Fsalonambience.mp3?v=1612872027123"
             ></audio>
             
             <audio
-              id="audioPatriTextile"
-              src="https://cdn.glitch.com/b82bb398-3ada-4af4-8aa4-d21adf3a10b0%2Finsite_Textile.mp3?v=1610533618661"
+              id="despachoPapaAmbience"
+              src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Fdespachopapaambience.mp3?v=1612872026939"
+            ></audio>
+            <audio
+              id="cocinaAmbience"
+              src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Fcocinaambience.mp3?v=1612872023173"
             ></audio>
             
             <audio
-              id="audioPatriConversation"
-              src="https://cdn.glitch.com/b82bb398-3ada-4af4-8aa4-d21adf3a10b0%2Finsite_Conversation2LQ.mp3?v=1610549013844"
-            ></audio>
-            
-            
+              id="jardinAmbience"
+              src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Fjardinambience.mp3?v=1612872024743"
+            ></audio>        
             
 
             <!-- Templates -->
@@ -486,7 +666,8 @@
                     random-avatar
                     scale="1 1.3 1"
                   ></a-entity>-->
-                  <a-sphere class="head" position="0 -0.5 0" material="color: #bdbdbd" scale="1 1 1">
+                  <a-pointcloud class="head" src="#avatarPixel" size="0.3" scale="0.5 0.5 0.5" opacity="1" depthwrite="false" pointcloud="depthWrite: true" rotation="-90 0 180"></a-pointcloud>
+                  <!--<a-sphere class="head" position="0 -0.5 0" material="color: #bdbdbd" scale="1 1 1">
                     <a-entity class="face" position="0 0.3 -0.5">
                             <a-sphere
                               class="eye"
@@ -505,7 +686,7 @@
                               segments-width="5"
                             ></a-sphere>
                     </a-entity>
-                  </a-sphere>
+                  </a-sphere>-->
                   <a-entity
                     class="nametag"
                     text="value: you; align: center; width: 10; color: #bdbdbd"
@@ -529,12 +710,11 @@
             id="player"
             networked="template:#player-template;attachTemplateToLocal:false;"
             movement-controls="speed: 0.2; fly: true"
-            
-            position="-1000 -1000 0"
-            rotation="0 90 0"
+            position="-32.6 17.6 37.7"
+            rotation="-1.8 -35.2 0"
             scale="1 1 1"
-            room-change
             resetorientation
+            room-change
           >
             <a-entity
               id="avatar"
@@ -544,7 +724,8 @@
               position="0 1.6 0"
             >
               <a-entity class="avatar" networked-audio-source></a-entity>
-              <a-sphere class="head"></a-sphere>
+              <a-pointcloud class="head"></a-pointcloud>
+              <!--<a-sphere class="head"></a-sphere>-->
               <a-sphere
                 id="playerCollider"
                 visible="false"
@@ -556,198 +737,252 @@
             </a-entity>
           </a-entity>
           
+          <!-- composition -->
+          <a-entity position="0 2.25 -15" particle-system="preset: dust; size: 0.5"></a-entity>
+          <a-entity light="type: ambient; color: #CCC"></a-entity>
+          <a-entity light="type: point; color: #CCC"></a-entity>
           
-          <!--ENTRANCE-->
-          
-          <a-sky color="black" segments-height="10" segments-width="16" scale="0.5 0.5 0.5" position="-1000 -1000 0"></a-sky>
-          
-          
-          <!--PATRI-->
-          <a-entity position="0 0 1000" scale="2 2 2">
-            <a-entity
-              light="color: white; intensity: 1; type: ambient;"
-              visible=""
-              position="0 6 0"
-            ></a-entity>
-
-            <!--<a-entity
-              light="type: point;
-                         color:#db6eff;
-                         intensity: 5;
-                         distance: 15"
-              position="0 0 50"
-            ></a-entity>
-
-            <a-entity
-              light="type: point;
-                         color:#6efaff;
-                         intensity: 5;
-                         distance: 25"
-              position="-20 7.5 1"
-            ></a-entity>-->
-
-            <a-sky
-              src="#sky"
-              rotation="0 -90 0"
-              segments-height="10"
-              segments-width="16"
-              scale="1 1 1"
-            ></a-sky>
-            <a-entity id="particles" particle-system="preset: snow"></a-entity>
-
-
-
-            <a-entity gltf-model="#PatriAnim" scale="10 10 10" position="0 32 0" animation-mixer="duration: 300; loop: pingpong"></a-entity>
-            <!--<a-entity gltf-model="#Patri" scale="10 10 10" position="0 0 0"></a-entity>-->
-            <a-entity gltf-model="#Floor" scale="10 10 10" position="0 32 0"></a-entity>
-            <a-entity gltf-model="#Chair" scale="10 10 10" position="0 32 0"></a-entity>
-            <a-entity gltf-model="#Radio" scale="10 10 10" position="0 32 0">
-              
-            </a-entity>
+          <!--DespachoAlvaro animation="property: model-opacity; dur:1000; from: 1; to: 0; loop: true"-->
+          <a-pointcloud class="modelFirst bro" scale="1 1 1" position="0 -3 0" rotation="-90 0 0" src="#model1" size="0.1" opacity="1" depthwrite="false">
             
-            <a-sphere
-                radius="3"
-                visible="false"
-                position="0 32 0"
-                sound="src: #audioPatriTextile; 
-                      autoplay: true;
-                      volume: 0.8;
-                      loop: true;
-                      refDistance: 15;
-                      rolloffFactor: 5"
-                animation="property: position; to: 0 0 0; dir: alternate; dur: 300000; easing: linear; loop: true"
-            >
-            </a-sphere>
+            <a-sphere position="-8 0.3 6" visible="false" sound="src: #despachoAlvaroAmbience; autoplay: true; volume: 1; loop: true; refDistance: 15; rolloffFactor: 5"></a-sphere>          
             
+          </a-pointcloud>
+          
+          <!--Salon-->
+          <a-pointcloud class="modelFirst mum" scale="1.12562 1.12562 1.12562" position="1.34709 11.05206 6.60284" rotation="-90 87.65 0" src="#model2" size="0.1" opacity="1" depthwrite="false">
+          
+            <a-sphere position="-8 0.3 6" visible="false" sound="src: #salonAmbience; autoplay: true; volume: 1; loop: true; refDistance: 15; rolloffFactor: 5"></a-sphere>
+            <a-sphere position="9 1 6" visible="false" sound="src: #salonAmbience; autoplay: true; volume: 1; loop: true; refDistance: 15; rolloffFactor: 5"></a-sphere>
+            
+          </a-pointcloud>
+          
+          <!--DespachoMama-->
+          <a-pointcloud class="modelFirst mum" scale="1.1 1.1 1.1" position="-0.67 25.967 -12.085" rotation="-90 173 0" src="#model3" size="0.1" opacity="1" depthwrite="false">
+          
+            <a-sphere position="1.5 1.5 6" visible="false" sound="src: #despachoMamaAmbience; autoplay: true; volume: 1; loop: true; refDistance: 15; rolloffFactor: 5"></a-sphere>
+          
+          </a-pointcloud>
+          
+          <!--Garaje-->
+          <a-pointcloud class="modelFirst mum" scale="0.653 0.653 0.653" position="-0.919 -3 -30.195" rotation="-90 3.9 0" src="#model4" size="0.1" opacity="1" depthwrite="false">
+            
+            <a-sphere position="-22 4.8 13" visible="false" sound="src: #sotanoAmbience; autoplay: true; volume: 1; loop: true; refDistance: 15; rolloffFactor: 5"></a-sphere>
+                      
+          </a-pointcloud>
+          
+          <!--DespachoPapa-->
+          <a-pointcloud class="modelFirst dad" scale="0.7 0.7 0.7" position="-56.8 16.1 13.1" rotation="-90 -90 0" src="#model5" size="0.1" opacity="1" depthwrite="false">
+          
+            <a-sphere position="-8 40 6" visible="false" sound="src: #despachoPapaAmbience; autoplay: true; volume: 1; loop: true; refDistance: 15; rolloffFactor: 5"></a-sphere>
+            
+          </a-pointcloud>
+          
+          <!--Buhardilla-->
+          <a-pointcloud class="modelFirst bro" scale="0.7 0.7 0.7" position="-7.9 39.5 15.36" rotation="-90 -90 0" src="#model6" size="0.1" opacity="1" depthwrite="false">
+          
+            <a-sphere position="2 0.3 11.5" visible="false" sound="src: #buhardillaAmbience; autoplay: true; volume: 1; loop: true; refDistance: 15; rolloffFactor: 5"></a-sphere>
+          
+          </a-pointcloud>
+          
+          <!-- Cocina -->
+          <a-pointcloud class="cocina" scale="1 1 1" position="-13.17 11.68 -30.93" rotation="-90 -90 0" src="#model7" size="0.1" opacity="1" depthwrite="false">
+          
+            <a-sphere position="1 5.5 8" visible="false" sound="src: #cocinaAmbience; autoplay: true; volume: 1; loop: true; refDistance: 15; rolloffFactor: 5"></a-sphere>
+            
+            <a-sphere class="ports" id="portCocina" visible="false" scale="4 4 0.25" position="3.5 0.7 8" sphere-collider="objects: #playerCollider; state: cocina; radius: 3"></a-sphere>
+                                  
+          </a-pointcloud>
+          
+          <!-- Fotografía -->
+          <a-pointcloud class="modelFirst dad bro" scale="1.39359 1.39359 1.39359" position="-22.36026 -2.77955 -7.64953" rotation="-90 0 0" src="#model8" size="0.1" opacity="1" depthwrite="false">
+          
+            <a-sphere position="-4 0.3 6" visible="false" sound="src: #fotografiaAmbience; autoplay: true; volume: 1; loop: true; refDistance: 15; rolloffFactor: 5"></a-sphere>
+                        
+          </a-pointcloud>
+          
+          <!-- Porche -->
+                    
+          <a-pointcloud class="modelFirst dad" scale="2.4 2.4 2.4" position="21.93186 7.69 -12.10759" rotation="-89.99963750135457 88.564951182347 0" src="#model9" size="0.1" opacity="1" depthwrite="false" pointcloud="depthWrite: true">
+          
+            <a-sphere position="-4 0.3 6" visible="false" sound="src: https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Fjardinambience.mp3?v=1612872024743; autoplay: true; loop: true; refDistance: 15; rolloffFactor: 5" material="" geometry=""></a-sphere>
+            
+          </a-pointcloud>
+          
+          <a-box id="cubeTest" material="color: red; visible: false"></a-box>
+          
+          
+          
+                    
+          <a-pointcloud class="modelFirst bro" scale="0.22 0.22 0.22" position="-2.16791 -4.34872 -12.34094" src="#mAlDespacho" size="0.015" opacity="1" depthwrite="false" pointcloud="depthWrite: true" rotation="-90 0 0">
+          
             <a-sphere
-              radius="3"
-              position="25 5.3 0"
+              class="ports"
+              id="portAlDespacho"
               visible="false"
-              sound="src: #audioPatriRoad; 
-                    autoplay: true;
-                    volume: 0.2;
-                    loop: true;
-                    refDistance: 15;
-                    rolloffFactor: 5"
-            >
-            </a-sphere>
-            
-            <a-sphere
-                radius="1"
-                position="-2.9 0 -2.1"
-                visible="false"
-                sound="src: #audioPatriConversation; 
-                      autoplay: true;
-                      volume: 0.3;
-                      loop: true;
-                      refDistance: 3;
-                      rolloffFactor: 5"
-              >
-              </a-sphere>
-            
-            <a-entity
-            
-            
-            position="0 0 0"
-            
-            ><a-sphere id="radio" visible="false" radio-streaming></a-sphere></a-entity>
+              scale="8 8 8"
+              position="0 2.5 30"
+              sphere-collider="objects: #playerCollider; state: alDespacho; radius: 4"
+              radio-streaming="src: #vidAlDespacho; refDist: 10; rollOff: 20;"
+              ></a-sphere>
           
-          </a-entity>
+          </a-pointcloud>
+
+          <a-pointcloud class="modelFirst bro" scale="0.22 0.22 0.22" position="-23.40734 -4.04066 -1.9286" src="#mAlFoto" size="0.015" opacity="1" depthwrite="false" pointcloud="depthWrite: true" rotation="-90 180 0">
           
-          <!--ROSIE-->
-          <a-entity position="0 0 -1000" scale="0.5 0.5 0.5">
-            <!-- Models -->
-            <!--green outside -->
-            <a-entity
-              gltf-model="#test"
-              position="40 140 -167"
-              scale="6 6 6"
-            ></a-entity>
-
-            <!-- small green \\ inside blue -->
-            <a-entity
-              gltf-model="#test"
-              position="12 -45 -19"
-              scale="0.6 0.6 0.6"
-              rotation="0 0 0"
-              animation="property: rotation; to: 0 360 0; loop: true; dur: 6000; easing:linear;"
-            ></a-entity>
-
-            <!-- big green \\ inside blue-->
-            <a-entity
-              gltf-model="#test"
-              position="12 -45 -19"
-              scale="1.5 1.5 1.5"
-              rotation="0 0 0"
-              animation="property: rotation; to: 0 -360 0; loop: true; dur: 30000; easing:linear;"
-            ></a-entity>
-
-            <!-- Orange 1 \\ inside blue -->
-            <a-entity
-              gltf-model="#traytwo"
-              position="6 -100 -10"
-              rotation="-20 6 -115"
-              scale="15 15 15"
-            ></a-entity>
-            <!-- Orange 2 \\outside blue -->
-            <a-entity
-              gltf-model="#traytwo"
-              position="150 60 -150"
-              scale="60 60 60"
-            ></a-entity>
-
-            <!-- Big blue -->
-            <a-entity
-              gltf-model="#trayone"
-              position="60 60 -60"
-              scale="10 10 10"
-              rotation="0 45 30"
-            ></a-entity>
-            
             <a-sphere
-              radius="10"
-              position="12 -45 -19"
+              class="ports"
+              id="portAlFoto"
               visible="false"
-              sound="src: #audioRosie; 
-                    autoplay: true;
-                    volume: 0.5;
-                    loop: true;
-                    refDistance: 100;
-                    rolloffFactor: 5"
-            >
-            </a-sphere>
-
-            <!-- <a-entity light="type=point";
-                      color: #FFFFFF;
-                      intensity:"1";
-                      distance:"5";
-                      shadowCameraVisable: "true";></a-entity> -->
-
-            <!-- small black sky 
-            <a-sky scale="0.5 0.5 0.5" color="#000000"></a-sky>-->
-
-            <!-- small white sky 
-            <a-sky scale="1 1 1" color="#FFFFFF"></a-sky>-->
-
-            <!-- big black sky -->
-            <a-sky scale="2 2 2" color="#000000"></a-sky>
-
-
-            <!-- text-1 -->
-            <a-entity
-              text="value: The System Erupts; width: 12; color:#FF5B03; align: center"
-              position="0 0 890"
-            ></a-entity>
+              scale="8 8 8"
+              position="0 2.5 30"
+              sphere-collider="objects: #playerCollider; state: alFoto; radius: 4"
+              radio-streaming="src: #vidAlFoto; refDist: 10; rollOff: 20;"
+              ></a-sphere>
             
-            
-            <a-entity
-            
-            
-            position="25 140 -170"
-            
-            ><a-sphere id="radio2" visible="false" radio-streaming-two></a-sphere></a-entity>
+          </a-pointcloud>
+
+          <a-pointcloud class="modelCocina" scale="0.22 0.22 0.22" visible="false" position="-15.48076 10.18215 -34.93376" src="#mAlCocina" size="0.015" opacity="1" depthwrite="false" pointcloud="depthWrite: true" rotation="-90 0 0">
           
-          </a-entity>
+            <a-sphere
+              class="ports"
+              id="portAlCocina"
+              visible="false"
+              scale="8 8 8"
+              position="0 2.5 30"
+              radio-streaming="src: #vidAlCocina; refDist: 10; rollOff: 20;"
+              ></a-sphere>
+            
+            
+          
+          </a-pointcloud>
+
+          <a-pointcloud class="modelFirst bro" scale="0.22 0.22 0.22" position="-7.01614 39.87547 23.31214" src="#mAlBuhardilla" size="0.015" opacity="1" depthwrite="false" pointcloud="depthWrite: true" rotation="-90 180 0">
+          
+            <a-sphere
+              class="ports"
+              id="portAlBuhardilla"
+              visible="false"
+              scale="8 8 8"
+              position="0 2.5 30"
+              sphere-collider="objects: #playerCollider; state: alBuhardilla; radius: 4"
+              radio-streaming="src: #vidAlBuhardilla; refDist: 10; rollOff: 20;"
+              ></a-sphere>
+          
+          </a-pointcloud>
+
+
+          <a-pointcloud class="modelFirst dad" scale="0.16 0.16 0.16" position="-23.85058 -2.51972 -21.21383" src="#mPaSotano" size="0.015" opacity="1" depthwrite="false" pointcloud="depthWrite: true" rotation="-90 180 0">
+          
+            <a-sphere
+              class="ports"
+              id="portPaSotano"
+              visible="false"
+              scale="8 8 8"
+              position="0 2.5 30"
+              sphere-collider="objects: #playerCollider; state: paSotano; radius: 4"
+              radio-streaming="src: #vidPaSotano; refDist: 10; rollOff: 20;"
+              ></a-sphere>
+          
+          </a-pointcloud>
+
+          <a-pointcloud class="modelFirst dad" scale="0.16 0.16 0.16" position="-30.68407 9.89295 12.70564" src="#mPaDespacho" size="0.015" opacity="1" depthwrite="false" pointcloud="depthWrite: true" rotation="-90 -150 0">
+          
+            <a-sphere
+              class="ports"
+              id="portPaDespacho"
+              visible="false"
+              scale="8 8 8"
+              position="0 2.5 30"
+              sphere-collider="objects: #playerCollider; state: paDespacho; radius: 4"
+              radio-streaming="src: #vidPaDespacho; refDist: 10; rollOff: 20;"
+              ></a-sphere>
+          
+          </a-pointcloud>
+
+          <a-pointcloud class="modelCocina" scale="0.16 0.16 0.16" visible="false" position="-13.27347 10.25907 -20.18879" src="#mPaCocina" size="0.015" opacity="1" depthwrite="false" pointcloud="depthWrite: true" rotation="-90 27.5 0">
+          
+            <a-sphere
+              class="ports"
+              id="portPaCocina"
+              visible="false"
+              scale="8 8 8"
+              position="0 2.5 30"
+              radio-streaming="src: #vidPaCocina; refDist: 10; rollOff: 20;"
+              ></a-sphere>
+          
+          </a-pointcloud>
+
+          <a-pointcloud class="modelFirst dad" scale="0.16 0.16 0.16" position="21.02716 11.57745 6.32867" src="#mPaJardin" size="0.015" opacity="1" depthwrite="false" pointcloud="depthWrite: true" rotation="-90 60 0">
+          
+            <a-sphere
+              class="ports"
+              id="portPaJardin"
+              visible="false"
+              scale="8 8 8"
+              position="0 2.5 30"
+              sphere-collider="objects: #playerCollider; state: paJardin; radius: 4"
+              radio-streaming="src: #vidPaJardin; refDist: 10; rollOff: 20;"
+              ></a-sphere>
+          
+          </a-pointcloud>
+
+
+
+          <a-pointcloud class="modelFirst mum" scale="0.2 0.2 0.2" position="-1.08591 -2.74017 -37.41744" src="#mMaSotano" size="0.015" opacity="1" depthwrite="false" pointcloud="depthWrite: true" rotation="-90 -45 0">
+          
+            <a-sphere
+              class="ports"
+              id="portMaSotano"
+              visible="false"
+              scale="8 8 8"
+              position="0 2.5 30"
+              sphere-collider="objects: #playerCollider; state: maSotano; radius: 4"
+              radio-streaming="src: #vidMaSotano; refDist: 10; rollOff: 20;"
+              ></a-sphere>
+          
+          </a-pointcloud>
+
+          <a-pointcloud class="modelFirst mum" scale="0.2 0.2 0.2" position="-3.49127 11.57745 -12.40416" src="#mMaSalon" size="0.015" opacity="1" depthwrite="false" pointcloud="depthWrite: true" rotation="-90 0 0">
+          
+            <a-sphere
+              class="ports"
+              id="portMaSalon"
+              visible="false"
+              scale="8 8 8"
+              position="0 2.5 30"
+              sphere-collider="objects: #playerCollider; state: maSalon; radius: 4"
+              radio-streaming="src: #vidMaSalon; refDist: 10; rollOff: 20;"
+              ></a-sphere>
+          
+          </a-pointcloud>
+
+          <a-pointcloud class="modelCocina" scale="0.2 0.2 0.2" visible="false" position="-4.25034 11.57745 -30.99463" src="#mMaCocina" size="0.015" opacity="1" depthwrite="false" pointcloud="depthWrite: true" rotation="-90 -90 0">
+          
+            <a-sphere
+              class="ports"
+              id="portMaCocina"
+              visible="false"
+              scale="8 8 8"
+              position="0 2.5 30"
+              radio-streaming="src: #vidMaCocina; refDist: 10; rollOff: 20;"
+              ></a-sphere>
+          
+          </a-pointcloud>
+
+          <a-pointcloud class="modelFirst mum" scale="0.2 0.2 0.2" position="4.04763 25.15619 -7.25244" src="#mMaDespacho" size="0.015" opacity="1" depthwrite="false" pointcloud="depthWrite: true" rotation="-90 90 0">
+          
+            <a-sphere
+              class="ports"
+              id="portMaDespacho"
+              visible="false"
+              scale="8 8 8"
+              position="0 2.5 30"
+              sphere-collider="objects: #playerCollider; state: maDespacho; radius: 4"
+              radio-streaming="src: #vidMaDespacho; refDist: 10; rollOff: 20;"
+              ></a-sphere>
+          
+          </a-pointcloud>
           
         </a-scene>
       </div>
@@ -769,12 +1004,12 @@
           <button class="UIbutton" id="myButton" onclick="toggleMic()">
             Mute
           </button>
-          <img
+          <!--<img
             class="ingameIcon"
             id="bottopIcon"
             src="https://cdn.glitch.com/b82bb398-3ada-4af4-8aa4-d21adf3a10b0%2F%E7%BC%96%E7%BB%84%209.png?v=1609587718016"
             crossorigin="anonymous"
-          />
+          />-->
           <input
             class="input"
             id="userName"
@@ -784,6 +1019,32 @@
           <button class="UIbutton" id="changeButton" onclick="changeUsername()">
             Change Username
           </button>
+          <p style="padding-left: 10px; opacity: 0.8;">
+            You are 
+          </p>
+          <p id="bottomUsername">
+            Username
+          </p>
+          
+        </div>
+        <div id="toprightcorner">
+          <img
+            id="VRButton"
+            class="ingameIcon"
+            title="Enter VR Mode"
+            src="https://cdn.glitch.com/f44e7d0f-6299-4434-a136-b24515e92365%2FVR.png?v=1603642471053"
+            crossorigin="anonymous"
+          />
+          
+          <img
+            id="FSbutton"
+            class="UIbutton"
+            title="Enter Fullscreen Mode"
+            src="https://cdn.glitch.com/f44e7d0f-6299-4434-a136-b24515e92365%2Ffullscreen.png?v=1603642470542"
+            onclick="toggleFullScreen()"
+            crossorigin="anonymous"
+          />
+          
           <a href="/faq.html" target="_blank">
             <img
               class="ingameIcon"
@@ -793,32 +1054,36 @@
               crossorigin="anonymous"
             />
           </a>
-        </div>
-        <img
-          id="VRButton"
-          class="ingameIcon"
-          title="Enter VR Mode"
-          src="https://cdn.glitch.com/f44e7d0f-6299-4434-a136-b24515e92365%2FVR.png?v=1603642471053"
-          crossorigin="anonymous"
-        />
-        
-        <div id="roomDescription" style="position: absolute; left: 0; display: flex; flex-direction: column; top: 5vh;">
-          <div id="artistNameCont" style="position: relative; color: blue; height: 50px; margin: 10px; cursor:default; z-index: 2000; opacity: 0.6; display: inline-flex; align-items: center;" title="Click here to know more about the artist!" onclick="visitWebsite(this)">
-            <img id="linkDescription" class="ingameIcon" src="https://cdn.glitch.com/b82bb398-3ada-4af4-8aa4-d21adf3a10b0%2F%E7%BC%96%E7%BB%84mod.png?v=1609602004088" crossorigin="anonymous"/>
-            <p id="artistName"></p>
+
+          <div id="roomDescription" style="display: flex; flex-direction: column; align-items: flex-end;">
+            <div id="artistNameCont" style="position: relative; color: blue; cursor:pointer; z-index: 2000; opacity: 0.6; display: inline-flex; align-items: center;" title="Click here to know more about the artist!" onclick="visitWebsite(this)">
+              <img id="linkDescription" class="ingameIcon" src="https://cdn.glitch.com/b82bb398-3ada-4af4-8aa4-d21adf3a10b0%2F%E7%BC%96%E7%BB%84mod.png?v=1609602004088" crossorigin="anonymous"/>
+              <!--<p id="artistName"></p>-->
+            </div>
+
+            <div id="artistDescriptionCont" style="position: relative; display: none; width: 20vw; font-size: 3px; background: rgba(0, 0, 0, 0.44); border-radius: 20px; z-index: -3000; padding: 10px; flex-direction: column; align-items: flex-end;">
+              <p id="artistName">Daniel Vera</p>
+              <p id="artistDescription" style="font-size: 0.8rem; padding: 10px;">When thinking about home, rather often the first image that comes to mind is a physical space.
+            However, even though that first thought is probably based on the need of a context, 
+            the thoughts quickly turn into memories that go beyond the strict materiality of the house. 
+            That is, really, where the combination of house and identity turn into what we usually define as home. 
+
+            Home is the virtual house, 
+            the time-based abstract layer generated by the inhabitant 
+            as a response to the urgency of translating their own identity into space.
+
+            But what happens when the individual perception of that layer collides with that of others?</p>
+            </div>
           </div>
           
-          <div id="artistDescriptionCont" style="position: relative; display: none; left: 40px; width: 20vw; font-size: 3px; background: rgba(0, 0, 0, 0.44); border-radius: 20px; z-index: -3000">
-            <p id="artistDescription" style="font-size: 0.8rem; padding: 10px;"></p>
-          </div>
         </div>
         
-        <div id="roomButton" title="Visit the other room!" style="position: absolute; right: 0; top: 50vh; transform: translateY(-50%); background: #4d4d4d; display: none; cursor:default; border-radius: 20px 0px 0px 20px; padding: 0px 20px 0px 15px; align-items: center" onclick="toggleRoom()">
+        <!--<div id="roomButton" title="Visit the other room!" style="position: absolute; right: 0; top: 50vh; transform: translateY(-50%); background: #4d4d4d; display: none; cursor:default; border-radius: 20px 0px 0px 20px; padding: 0px 20px 0px 15px; align-items: center" onclick="toggleRoom()">
           <p>
             To another<br>room
           </p>
           <img id="arrowRooms" src="https://cdn.glitch.com/b82bb398-3ada-4af4-8aa4-d21adf3a10b0%2F%E7%BC%96%E7%BB%84%2010.png?v=1609602367068" crossorigin="anonymous" style="position: absolute; height:30px; width: auto; right: 0;"/>
-        </div>
+        </div>-->
         
       </div>
 
@@ -830,12 +1095,16 @@
             src="https://cdn.glitch.com/f44e7d0f-6299-4434-a136-b24515e92365%2Fchat%20icon.png?v=1603642470653"
             crossorigin="anonymous"
           />
-          <input class="input" id="chatBox" placeholder="Here to chat!" />
+          <!--<input class="input" id="chatBox" placeholder="Here to chat!" />
           <button class="UIbutton" onclick="sendMessage()">
             Send
+          </button>-->
+          
+          <button class="UIbutton" onclick="goToArtist()">
+            Go to Artist
           </button>
 
-          <img
+          <!--<img
             id="FSbutton"
             class="UIbutton"
             title="Enter Fullscreen Mode"
@@ -843,7 +1112,7 @@
             onclick="toggleFullScreen()"
             crossorigin="anonymous"
           />
-          <!--<p id="toggleFS">
+          <p id="toggleFS">
             Toggle Fullscreen Mode
           </p>-->
           <!--<img
@@ -866,10 +1135,10 @@
         <div id="bottomCorner">
           <img
             id="ingameLogo"
-            src="https://cdn.glitch.com/b82bb398-3ada-4af4-8aa4-d21adf3a10b0%2FIN-SITE.png?v=1609585445220"
+            src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Flogo.png?v=1613210108666"
             crossorigin="anonymous"
           />
-          <img
+          <!--<img
             class="ingameIcon"
             id="botbottomIcon"
             src="https://cdn.glitch.com/b82bb398-3ada-4af4-8aa4-d21adf3a10b0%2F%E7%BC%96%E7%BB%84%209.png?v=1609587718016"
@@ -877,7 +1146,7 @@
           />
           <p id="bottomUsername">
             Username
-          </p>
+          </p>-->
         </div>
       </div>
 
@@ -886,7 +1155,7 @@
           <div id="enterBack"></div>
           <img
             id="logoEnter"
-            src="https://cdn.glitch.com/b82bb398-3ada-4af4-8aa4-d21adf3a10b0%2FIN-SITE.png?v=1609585445220"
+            src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Flogo.png?v=1613210108666"
             crossorigin="anonymous"
           />
           <!--<h1 id="title">
@@ -894,13 +1163,16 @@
           </h1>
           <img id="subtitle" src="https://cdn.glitch.com/f44e7d0f-6299-4434-a136-b24515e92365%2Ficons-18.png?v=1603653286077" />-->
           
-          <div id="textExhibition" style="width: 50vw; text-align: center; background: rgba(0,0,0,0.2); margin: 30px 0px; border-radius: 20px;">
-            <p style="line-height: 30px; font-weight: bold; font-size: 1.3rem;">
-              15/01/2021 - 29/01/2021  
-              <br>
-              <br>Welcome to our first virtual exhibition,
-              <br>by artists Patricia Mascarell and Rosie Hook.
-            </p>
+          <div id="textExhibition" style="width: 50vw; text-align: center; background: rgba(0,0,0,0.2); margin: 30px 0px 5px; border-radius: 20px;">
+            <pre id="description" class="splitText">
+              Welcome to the digital event of the augmented documentary Encuentros.
+  
+              When thinking about home, rather often the first image that comes to mind is a physical space. 
+              However, even though that first thought is probably based on the need of a context, 
+              the thoughts quickly turn into memories that go beyond the strict materiality of the house. 
+              That is, really, where the combination of house and identity turn into what we usually define as home. 
+
+            </pre>
           </div>
 
           <div id="instructions">
@@ -953,13 +1225,14 @@
             </button>
           </div>
           
-          <div id="copyright" style="position: absolute; bottom: -9vh;">
+          <!--<div id="copyright" style="position: absolute; bottom: -9vh;">
             <p style="font-size: 0.7rem">
               ©️2021 Maia, All rights reserved.
             </p>            
-          </div>
+          </div>-->
           
         </div>
+        <!--
         <div id="enterBottomCorner">
           
         
@@ -979,13 +1252,54 @@
         </a>
         </div>
         
-      </div>
-      
-      <div id="enterOverlay">
+      </div>-->
         
-      </div>
+      <div id="enterBottom">
       
-      <div id="descriptions">
+        <div id="rca" class="sponsor">
+          
+          <a href="https://www.instagram.com/maiadigital.world/" target="_blank">
+          <img
+            class="sponsorLogo"
+            src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FRCA%20logo-white.png?v=1613231846247"
+            crossorigin="anonymous"
+          />
+        </a>
+          <!--<p style="font-size: 0.6rem;">
+            Sponsored by the RCA Fund Scholarship 2019:
+          </p>-->
+        </div>
+        <div id="rarea" class="sponsor">
+          
+          <a href="https://www.instagram.com/maiadigital.world/" target="_blank">
+          <img
+            class="sponsorLogo"
+            src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Flogo%20white%20bigger%20text.png?v=1613232678318"
+            crossorigin="anonymous"
+          />
+        </a>
+          <!--<p style="font-size: 0.6rem;">
+            Project produced by:
+          </p>-->
+        </div>
+        <div id="maia" class="sponsor">
+          
+          <a href="https://www.instagram.com/maiadigital.world/" target="_blank">
+          <img
+            class="sponsorLogo"
+            src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FMaia_logo3-white.png?v=1613231265790"
+            crossorigin="anonymous"
+          />
+        </a>
+          <!--<p style="font-size: 0.6rem;">
+            Event supported by:
+          </p>-->
+        </div>
+        
+        </div>
+      
+      
+      <!--<div id="descriptions">
         <div id="descriptionBack"></div>
         <div id="patriIntro" class="introDescriptions">
           <div class="introNameContainer"><p>Patricia Mascarell</p></div>
@@ -1030,7 +1344,7 @@
             </p>
           </a>
         </div>
-      </div>
+      </div>-->
     
       
       <div id="exit">
@@ -1039,7 +1353,7 @@
         </div>
       </div>
       
-      <div id="dateOverlay">
+      <!--<div id="dateOverlay">
       
         <img id="insiteLogoOpening"
              src="https://cdn.glitch.com/b82bb398-3ada-4af4-8aa4-d21adf3a10b0%2FIN-SITE.png?v=1609585445220"
@@ -1052,19 +1366,196 @@
              crossorigin="anonymous"/>
         
       
-      </div>
+      </div>-->
       
     </div>
     
+      <div id="enterVideoCont" style="position: absolute; width: 100vw; height: 100vh; margin: 0; z-index: 100000; background: black; display: none">
+      
+        <video id="enterVideo" preload="auto" crossorigin="anonymous" style="width: 100vw;">
+          
+          <source
+            src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FProcessStartCutRedux.mp4?v=1613236324790"
+            type="video/mp4"
+          />
+
+          Your browser does not support the video tag.
+        
+        </video>
+        
+        
+      </div>
+      
+      <div id="enterPresentation" style="position: absolute; width: 100vw; height: 100vh; margin: 0; z-index: 100000; background: black;">
+        <div id="packagePresentation" style="position: absolute; top: 50%; transform: translateY(-50%); width: 100vw; height: 100vh; margin: 0; display: flex; flex-direction: row; justify-content: space-around; align-items: center">
+          
+        
+          <div class="sponsorEnter">
+            <p style="font-size: 0.6rem;">
+              Sponsored by the RCA Fund Scholarship 2019:
+            </p>
+            <a href="https://www.instagram.com/maiadigital.world/" target="_blank">
+            <img
+              class="sponsorLogoEnter"
+              src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FRCA%20logo-white.png?v=1613231846247"
+              crossorigin="anonymous"
+            />
+          </a>
+
+          </div>
+          <div class="sponsorEnter">
+            <p style="font-size: 0.6rem;">
+              Project produced by:
+            </p>
+            <a href="https://www.instagram.com/maiadigital.world/" target="_blank">
+            <img
+              class="sponsorLogoEnter"
+              src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Flogo%20white%20bigger%20text.png?v=1613232678318"
+              crossorigin="anonymous"
+            />
+          </a>
+
+          </div>
+          <div class="sponsorEnter">
+            <p style="font-size: 0.6rem;">
+              Event supported by:
+            </p>
+            <a href="https://www.instagram.com/maiadigital.world/" target="_blank">
+            <img
+              class="sponsorLogoEnter"
+              src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2FMaia_logo3-white.png?v=1613231265790"
+              crossorigin="anonymous"
+            />
+          </a>
+
+          </div>
+          
+        </div>
+        
+      </div>
+      
+      
+    
+    <!--MODEL VISIBILITY LOOP-->
     <script>
     
+      //let cube = document.querySelector('#cubeTest');
+      let videoRef = document.querySelector('#vidAlFoto');
+      let videoCocina = document.getElementsByClassName('videoCocina');
+      let modelCocina = document.getElementsByClassName('modelCocina');
+      let videoCocinaRef = document.getElementById('vidAlCocina');
+      let videos = document.getElementsByClassName('video');
+      let models = document.getElementsByClassName('modelFirst');
+      
+      let visibleModels = true;
+      
+      let round = 0;
+      
+      videoRef.addEventListener('ended', function(){
+          
+        console.log('round' + round);
+        
+        if(round == 1){
+          
+          console.log('changing visible');
+          //cube.setAttribute('material', 'visible', true);
+          toggleCocina();
+          toggleModels();
+          round = 0;
+        }else{
+          
+          for(let o=0; o<videos.length; o++){
+            videos[o].play();
+          };
+          round += 1;
+        }
+        
+        
+      });
+      
+      function toggleCocina(){
+        for(let i=0; i<modelCocina.length; i++){
+          modelCocina[i].object3D.visible = true;
+          
+        };
+        for(let o=0; o<videoCocina.length; o++){
+          videoCocina[o].play();
+        };
+        
+        videoCocinaRef.addEventListener('ended', ()=>{
+          for(let i=0; i<modelCocina.length; i++){
+            modelCocina[i].object3D.visible = false;
+          };
+          toggleModels();
+        });
+        
+      }
+      
+      function toggleModels(){
+        
+        if(visibleModels){
+          console.log('switching models off');
+          for(let i=0; i<models.length; i++){
+            models[i].object3D.visible = false;
+            visibleModels = false;
+          }
+        }else{
+          console.log('switching models on');
+          for(let i=0; i<models.length; i++){
+            models[i].object3D.visible = true;
+            visibleModels = true;
+          };
+          for(let o=0; o<videos.length; o++){
+            videos[o].play();
+          };
+        }
+        
+      };
+    
+    </script>
+    
+    <!-- OVERLAY -->
+    <script>
+    
+      let enterFade = document.getElementById('enterOverlay');
+      let overlayVisible = true;
+      
       window.addEventListener('load', function(){
         
-        let enterFade = document.getElementById('enterOverlay');
         
-        enterFade.style.opacity = '0';
-        enterFade.addEventListener('transitionend', () => {enterFade.style.visibility = 'hidden';});
+        toggleOverlay();
+        window.setTimeout(function(){
+          toggleOverlay();
+          enterFade.addEventListener('transitionend', reOpen);
+          
+        }, 6000);
+        //enterFade.style.opacity = '0';
+        //enterFade.addEventListener('transitionend', () => {enterFade.style.visibility = 'hidden';});
       });
+      
+      
+      function reOpen(){
+        document.getElementById('enterPresentation').style.display = 'none';
+        toggleOverlay();
+        enterFade.removeEventListener('transitionend', reOpen);
+      }
+      
+      
+      function toggleOverlay(){
+        
+        console.log('overlay');
+        if(overlayVisible){
+          enterFade.style.opacity = '0';
+          overlayVisible = false;
+        }else{
+          enterFade.style.opacity = '1';
+          overlayVisible = true;
+        }
+        
+        //enterFade.addEventListener('transitionend', () => {enterFade.style.visibility = 'hidden';});
+        
+      }
+      
       
     </script>
 
@@ -1133,11 +1624,6 @@
             component: "text",
             property: "value"
           },
-          {
-            selector: ".head",
-            component: "material",
-            property: "color"
-          }
         ]
       });
 
@@ -1227,18 +1713,30 @@
         
         var firstInput = document.getElementById("firstUsername").value;
         
+        
         if(firstInput == "artist"){
           let person = prompt("Please enter password", "Harry Potter");
           if(person == "GoldPH"){
             //console.log('You guessed it');
-            changeUsernameFirst();
+            window.setTimeout(changeUsernameFirst, 2000);
+            //changeUsernameFirst();
             resizeAvatar();
           }else{
             //console.log('Nope')
           };
         }else{
-          changeUsernameFirst();
-        }
+          window.setTimeout(changeUsernameFirst, 2000);
+          //changeUsernameFirst();
+        };
+        
+        //let vid = document.getElementsByClassName('video');
+        
+        toggleOverlay();
+        window.setTimeout(function(){
+          playVideo();
+          toggleOverlay();
+        }, 3000);
+        //playVideo();
         
       };
       
@@ -1252,7 +1750,7 @@
         let uibottom = document.getElementById("ingameUIbottom");
 
         var enter = document.getElementById("enter");
-        let descriptionsEnter = document.querySelector('#descriptions');
+        //let descriptionsEnter = document.querySelector('#descriptions');
         
         if (firstInput != ""){
       
@@ -1267,7 +1765,7 @@
           enter.style.display = "none";
           uitop.style.display = "flex";
           uibottom.style.display = "flex";
-          descriptionsEnter.style.display = "flex";
+          //descriptionsEnter.style.display = "flex";
         }else{
         
 
@@ -1279,7 +1777,7 @@
           enter.style.display = "none";
           uitop.style.display = "flex";
           uibottom.style.display = "flex";
-          descriptionsEnter.style.display = "flex";
+          //descriptionsEnter.style.display = "flex";
         };
 
         
@@ -1303,6 +1801,33 @@
           sessionStorage.setItem("username", input);
           console.log("your username is " + input);
         }
+      }
+      
+      
+      //PLAY VIDEO
+      function playVideo(){
+        
+        let videoEnter = document.getElementById('enterVideo');
+        let videoEnterCont = document.getElementById('enterVideoCont');
+        
+        videoEnterCont.style.display = "block";
+        videoEnter.play();
+        
+        videoEnter.addEventListener('ended', function(){
+          
+          videoEnterCont.style.display = "none";
+          
+          for(let i=0; i<videos.length; i++){
+          
+            videos[i].play();
+          
+          };
+          
+          toggleOverlay();
+          window.setTimeout(toggleOverlay, 2000);
+          
+        })
+        
       }
     </script>
 
@@ -1385,6 +1910,20 @@
     <!--TELETRANSPORTATION-->
     
     <script>
+    
+      function goToArtist(){
+                       
+        let scene2 = document.querySelector('a-scene'); 
+        
+        let eventRoom = new CustomEvent("roomChange", {detail: { name: "toArtist" }});
+                
+        scene2.dispatchEvent(eventRoom);
+        //console.log("dispatched");
+      }
+    
+    </script>
+    
+    <!--<script>
       
       let scene = document.querySelector('a-scene');
       let descriptionsEnter = document.querySelector('#descriptions');
@@ -1478,18 +2017,18 @@
 
       });*/
     
-    </script>
+    </script>-->
     
     
     <!--SHOW ARTIST DESCRIPTION ON SCENE-->
     <script>
     
-      let artistButton = document.querySelector('#artistName');
+      let artistButton = document.querySelector('#artistNameCont');
       let descriptionArtist = document.querySelector('#artistDescriptionCont');
       
       artistButton.addEventListener('mouseover', function(){
         //patriDesc.style.visibility = "visible";
-        descriptionArtist.style.display = "block";
+        descriptionArtist.style.display = "flex";
         console.log('Showing Description');
       });
       
@@ -1501,16 +2040,11 @@
       
       let artistName = document.querySelector('#artistNameCont');
       
-      function visitWebsite(elmnt){
-        let artistWho = artistButton.innerHTML;
+      function visitWebsite(){
         
-        if(artistWho == "Patricia Mascarell"){
-          console.log("going to Patricias website");
-          window.open("https://patriciamascarell.com/", '_blank');
-        }else if(artistWho == "Rosie Hook"){
-          console.log("going to Rosies website");
-          window.open("https://www.rosiehook.com/", '_blank');
-        }else{console.log("what?")};
+          console.log("going to Daniels website");
+          window.open("https://danielveravillalobos.wordpress.com/madd/", '_blank');
+        
         
       }
     
@@ -1519,7 +2053,7 @@
     
     
     <!--DATE OPENING-->
-    <script>
+    <!--<script>
     
       var timeDif = new Date(2021, 0, 14, 18, 59).getTime() - Date.now();
       
@@ -1535,7 +2069,7 @@
       
       
     
-    </script>
+    </script>-->
     
     <!--UPDATE ADMIN AVATAR-->
     <script>
@@ -1557,7 +2091,7 @@
     
     
     <!--LOADING-->
-    <script>
+    <!--<script>
     
       let visitText = document.getElementsByClassName('visitText');
       let visitRosie = document.querySelector('#roomRosie');
@@ -1565,7 +2099,8 @@
       let descriptionBack = document.querySelector('#descriptionBack');
       let visitButton = document.getElementsByClassName('introVisit');
       
-
+      let scene = document.querySelector('a-scene');
+      
       if (scene.hasLoaded) {
         run();
       } else {
@@ -1576,6 +2111,8 @@
       }
       
       function run(){
+        
+        console.log('scene Loaded');
         
         for(let i=0; i<visitText.length; i++){
           visitText[i].innerHTML = "VISIT";
@@ -1599,7 +2136,7 @@
       
     
     
-    </script>
+    </script>-->
 
     <!-- FLY 
     <script>
@@ -1614,5 +2151,60 @@
         }
       }
     </script>-->
+    
+    
+    <!--SUBTITLES -->
+    
+    <script type="text/javascript">
+
+        // don't add this listener until all DOM content is loaded
+
+        /*document.addEventListener("DOMContentLoaded", function () {
+            let trackDespAlv = document.getElementById("trackDespAlv");
+            trackDespAlv.addEventListener("cuechange", function () {
+                let myTrack = this.track;
+                let myCues = myTrack.activeCues;      // array of current cues.
+                //  display the start and end time, and cue text
+                if (myCues.length > 0) {
+                    let disp = document.getElementById("subDespAlv");
+                    disp.innerHTML = myCues[0].getCueAsHTML().textContent;
+                }
+            }, false);
+        
+            
+
+            
+        }, false);*/
+      
+      
+      document.addEventListener("DOMContentLoaded", function () {
+            //let trackDespAlv = document.getElementById("trackDespAlv");
+            
+        let tracks = document.getElementsByClassName('tracks');
+
+        for(let i=0; i<tracks.length; i++){
+
+          let id = tracks[i].id;
+          let subId = "sub" + id;
+          
+          tracks[i].addEventListener("cuechange", function () {
+            let myTrack = this.track;
+            let myCues = myTrack.activeCues;      // array of current cues.
+            //  display the start and end time, and cue text
+            if (myCues.length > 0) {
+                let disp = document.getElementById(subId);
+                disp.innerHTML = myCues[0].getCueAsHTML().textContent;
+            }
+          }, false);
+
+        }
+         
+
+            
+        }, false);
+      
+    </script>
+    
+    
   </body>
 </html>
