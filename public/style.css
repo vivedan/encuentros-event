@@ -520,7 +520,7 @@ h1 {
 
 
 #enterButton {
-  opacity: 0.8;
+  opacity: 0.6;
   background: black;
   border-radius: 30px;
   border-style: solid;
@@ -535,7 +535,7 @@ h1 {
   color: white;
   transition: background 1s, box-shadow 0.5s, opacity: 0.4s;
   z-index: 5000;
-  
+  outline: none;
 }
 
 #enterButton:hover {
@@ -801,9 +801,9 @@ h1 {
   color: white;
   border: 0;
   outline: none;
-  height: 22px;
+  height: 25px;
   border-radius: 7px;
-  font-size: 10px;
+  font-size: 13px;
   font-family: 'Lato';
   transition: opacity 0.2s;
 }
