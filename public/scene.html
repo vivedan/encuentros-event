@@ -1740,6 +1740,12 @@
           //changeUsernameFirst();
         };
         
+        let vids = document.getElementsByClassName('video');
+        
+        for(let i=0; i<vids.length; i++){
+          vids[i].play();
+        }
+        
         //let vid = document.getElementsByClassName('video');
         
         //toggleOverlay();
@@ -2133,10 +2139,7 @@
         enterButton.style.cursor = "pointer";
         enterButton.style.opacity = "1";
         
-        let vids = document.getElementsByClassName('video');
-        for(let i=0; i<vids.length; i++){
-          vids[i].play();
-        }
+        
         
         enterButton.addEventListener("click", checkUsername);
         
