@@ -90,7 +90,7 @@
         tick: function() {
           let yPos = this.el.object3D.position.y;
 
-          console.log(yPos);
+          //console.log(yPos);
 
           if (yPos > 110) {
             setTimeout(myclose, 5000);
@@ -130,8 +130,8 @@
 
         init: function() {
           this.el.addEventListener("stateadded", event => {
-            console.log("comienzo colision");
-            console.log(event.detail);
+            //console.log("comienzo colision");
+            //console.log(event.detail);
             let port = event.detail;
             let overlay = document.querySelector('#exitOverlay');
             let test = document.getElementById('test1');
@@ -211,7 +211,7 @@
 
           this.el.addEventListener("hitend", e => {
             let test = document.getElementById('test1');
-            console.log("fin colision");
+            //console.log("fin colision");
             //test.style.background = "transparent";
             let subs = document.getElementsByClassName('subs');
             
@@ -309,11 +309,11 @@
           
           scene.addEventListener('roomChange', function(){
             
-              console.log("going to Artist");
-              el.setAttribute('position', {x:-32.6, y:17.5, z:37.7});
+              //console.log("going to Artist");
+              el.setAttribute('position', {x:49.8, y:15.3, z:-17.9});
               //el.object3D.rotation.y = THREE.Math.degToRad(90);
               //el.setAttribute('movement-controls', 'speed', 0.2);
-              el.emit('resetorientation', {grad: -35.2});
+              el.emit('resetorientation', {grad: -250});
             
             
             
@@ -572,6 +572,7 @@
       adapter: easyrtc;
       audio: true;
       debug: true;
+      connectOnLoad: false;                  
     "
           update-rate
           loading-screen="enabled: false"
@@ -613,43 +614,52 @@
             <audio
               id="despachoAlvaroAmbience"
               src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Fdespachoalvaroambience.mp3?v=1612870444793"
+              crossorigin="anonymous"
             ></audio>
             <audio
               id="sotanoAmbience"
               src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Fsotanoambience.mp3?v=1612870447113"
+              crossorigin="anonymous"
             ></audio>
             
             <audio
               id="fotografiaAmbience"
               src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Ffotografiaambience.mp3?v=1612870446816"
+              crossorigin="anonymous"
             ></audio>
             
             <audio
               id="despachoMamaAmbience"
               src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Fdespachomamaambience.mp3?v=1612872024081"
+              crossorigin="anonymous"
             ></audio>
             <audio
               id="buhardillaAmbience"
               src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Fbuhardillaambience.mp3?v=1612872026262"
+              crossorigin="anonymous"
             ></audio>
             
             <audio
               id="salonAmbience"
               src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Fsalonambience.mp3?v=1612872027123"
+              crossorigin="anonymous"
             ></audio>
             
             <audio
               id="despachoPapaAmbience"
               src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Fdespachopapaambience.mp3?v=1612872026939"
+              crossorigin="anonymous"
             ></audio>
             <audio
               id="cocinaAmbience"
               src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Fcocinaambience.mp3?v=1612872023173"
+              crossorigin="anonymous"
             ></audio>
             
             <audio
               id="jardinAmbience"
               src="https://cdn.glitch.com/4a983c87-b227-48e7-9c40-3a4001027d0e%2Fjardinambience.mp3?v=1612872024743"
+              crossorigin="anonymous"
             ></audio>        
             
 
@@ -1025,7 +1035,7 @@
           <button class="UIbutton" id="changeButton" onclick="changeUsername()">
             Change Username
           </button>
-          <p style="padding-left: 10px; opacity: 0.8;">
+          <p style="padding-left: 20px; opacity: 0.8;">
             You are 
           </p>
           <p id="bottomUsername">
@@ -1106,7 +1116,7 @@
             Send
           </button>-->
           
-          <button class="UIbutton" onclick="goToArtist()">
+          <button id="goArtistButton" class="UIbutton" onclick="goToArtist()">
             Talk to Artist
           </button>
 
@@ -1797,6 +1807,10 @@
           //descriptionsEnter.style.display = "flex";
         };
 
+        AFRAME.scenes[0].emit('connect');
+        window.setTimeout(function(){
+          toggleMic();
+        }, 3000);
         
       }
 
@@ -2069,8 +2083,8 @@
     </script>
     
     
-    <!--DATE OPENING-->
-    <!--<script>
+    <!--DATE OPENING
+    <script>
     
       var timeDif = new Date(2021, 0, 14, 18, 59).getTime() - Date.now();
       
@@ -2138,14 +2152,15 @@
         enterButton.innerHTML = "ENTER";
         enterButton.style.cursor = "pointer";
         enterButton.style.opacity = "1";
-        
+        enterButton.style.background = "lightgrey";
+        enterButton.style.color = "black";
         
         
         enterButton.addEventListener("click", checkUsername);
         
-        window.setTimeout(function(){
+        /*window.setTimeout(function(){
           toggleMic();
-        }, 2000);
+        }, 2000);*/
       }
       
       
