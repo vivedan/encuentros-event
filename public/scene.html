@@ -571,8 +571,7 @@
       room: audio;
       adapter: easyrtc;
       audio: true;
-      debug: true;
-      connectOnLoad: false;                  
+      debug: true;                  
     "
           update-rate
           loading-screen="enabled: false"
@@ -709,12 +708,12 @@
                     position="0 0.95 0"
                     rotation="0 180 0"
                   ></a-entity>
-                  <a-entity
+                  <!--<a-entity
                     class="chattext"
                     text="value: you; align: center; width: 3"
                     position="0 0.7 0"
                     rotation="0 180 0"
-                  ></a-entity>
+                  ></a-entity>-->
                 </a-entity>
               </a-entity>
             </template>
@@ -749,7 +748,7 @@
                 collision-trigger
               ></a-sphere>
               <a-entity class="nametag" text="value: "></a-entity>
-              <a-entity class="chattext" text=""></a-entity>
+              <!--<a-entity class="chattext" text=""></a-entity>-->
             </a-entity>
           </a-entity>
           
@@ -1640,11 +1639,6 @@
             component: "text",
             property: "value"
           },
-          {
-            selector: ".chattext",
-            component: "text",
-            property: "value"
-          },
         ]
       });
 
@@ -1661,7 +1655,9 @@
       let micBack = document.getElementById('muteBack');
       let audiortc = 1;
       console.log(audiortc);
-
+      micBack.style.display = "block";
+      icon.src = "https://cdn.glitch.com/f44e7d0f-6299-4434-a136-b24515e92365%2Fmaikefeng-2.png?v=1603802144461";
+      
       /*function checkMic() {
         if (audiortc == 0) {
           easyrtc.enableMicrophone(false);
@@ -1807,10 +1803,10 @@
           //descriptionsEnter.style.display = "flex";
         };
 
-        AFRAME.scenes[0].emit('connect');
+        /*AFRAME.scenes[0].emit('connect');
         window.setTimeout(function(){
           toggleMic();
-        }, 3000);
+        }, 3000);*/
         
       }
 
@@ -1863,7 +1859,7 @@
     </script>
 
     <!--CHAT-->
-    <script>
+    <!--<script>
       let chattext = player.querySelector(".chattext");
 
       let chatBox = document.getElementById("chatBox");
@@ -1877,7 +1873,7 @@
           chattext.setAttribute("text", "value", "");
         }, 4000);
       }
-    </script>
+    </script>-->
 
     <!-- CENTER SPAM -->
 
@@ -2160,7 +2156,7 @@
         
         /*window.setTimeout(function(){
           toggleMic();
-        }, 2000);*/
+        }, 4000);*/
       }
       
       
