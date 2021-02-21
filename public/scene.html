@@ -1131,10 +1131,19 @@
             Talk to Artist
           </button>
           
-          <p id="artistEmail" style="padding-left: 20px; opacity: 0.8; margin: 0; display: none;">
-            If the artist is not here, you can contact him at   d.vera-villalobos@network.rca.ac.uk
+          <div id="artistEmail" style="display:none">
+            
+          
+          <p style="padding-left: 20px; opacity: 0.8; margin: 0;">
+            If the artist is not here, you can connect to a zoom call clicking
           </p>
-
+          <a href="https://rca-ac.zoom.us/j/93342771009?pwd=MVVyU2dBblpDaXZ0cy9RU1MvalpaUT09" target="_blank">
+            <p style="padding-left: 20px; opacity: 0.8; margin: 0; text-decoration: underline 2px; font-weight: bold;">
+              here
+            </p>
+          </a>
+  
+          </div>
           <!--<img
             id="FSbutton"
             class="UIbutton"
@@ -1963,7 +1972,7 @@
         scene2.dispatchEvent(eventRoom);
         //console.log("dispatched");
         let artistEmail = document.getElementById('artistEmail');
-        artistEmail.style.display = "block";
+        artistEmail.style.display = "flex";
         window.setTimeout(function(){
           artistEmail.style.display = "none";
         }, 60000);
